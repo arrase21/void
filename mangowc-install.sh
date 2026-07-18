@@ -111,10 +111,14 @@ setup() {
   echo "zram active"
 
   step "Configurando swappiness"
-  grep -q "vm.swappiness" /etc/rc.local 2>/dev/null || sudo tee -a /etc/rc.local > /dev/null << 'EOF'
-sysctl vm.swappiness=180 vm.watermark_boost_factor=0 vm.watermark_scale_factor=125 vm.page-cluster=0
+  sudo tee /etc/sysctl.d/99-custom.conf > /dev/null << 'EOF'
+vm.swappiness=180
+vm.watermark_boost_factor=0
+vm.watermark_scale_factor=125
+vm.page-cluster=0
 EOF
-  sudo sysctl vm.swappiness=180 vm.watermark_boost_factor=0 vm.watermark_scale_factor=125 vm.page-cluster=0
+  sudo sysctl --system
+
   sudo ln -sf /etc/sv/bluetoothd /var/service/
   echo "bluetoothd active"
   sudo rm -f /var/service/dhcpcd
@@ -175,3 +179,4 @@ main() {
 }
 
 main "$@"
+
