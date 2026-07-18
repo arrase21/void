@@ -1,0 +1,545 @@
+:root {
+	&[uidensity="compact"] {
+		--tab-min-height: 20px !important;
+	}
+}
+
+/* =========================
+   FONTS
+========================= */
+*,
+*::before,
+*::after {
+	font-family: JetBrainsMono Nerd Font, VictorMono Nerd Font, JetBrains Mono, monospace, monospace;
+}
+
+/* =========================
+   ALERT BOX & NOTIFICATIONS
+========================= */
+#notifications-toolbar {
+	position: fixed !important;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+#sidebar-header {
+	display: none !important;
+}
+
+/* =========================
+   NAV BAR + URLBAR REVEAL
+========================= */
+#nav-bar {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0;
+	right: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	z-index: 9999 !important;
+	opacity: 0 !important;
+}
+
+#urlbar {
+	opacity: 0 !important;
+	pointer-events: none !important;
+}
+
+#navigator-toolbox:is(:hover, :focus-within) #nav-bar {
+	top: 32px !important;
+	opacity: 1 !important;
+}
+
+#navigator-toolbox:is(:hover, :focus-within) #urlbar {
+	opacity: 1 !important;
+	pointer-events: auto !important;
+}
+
+#navigator-toolbox {
+	position: relative !important;
+	z-index: 10000 !important;
+	border-bottom: none !important;
+}
+
+/* =========================
+   TABS DESIGN - HORIZONTAL (MEJORADO)
+========================= */
+.tab-background {
+	min-height: 0 !important;
+	border-radius: 10px !important;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+.tab-text {
+	margin: 0 !important;
+}
+
+/* Tabs con ancho flexible pero limitado */
+.tabbrowser-tab[fadein]:not([pinned]) {
+	min-width: 120px !important;
+	max-width: 200px !important;
+	transition:
+		transform 0.25s cubic-bezier(.25,.8,.25,1),
+		background 0.2s ease,
+		min-width 0.3s ease,
+		max-width 0.3s ease !important;
+	height: 36px !important;
+}
+
+/* Tabs pinned más pequeñas */
+.tabbrowser-tab[pinned] {
+	min-width: 40px !important;
+	max-width: 40px !important;
+	padding: 0 !important;
+}
+
+/* Background redondo completo para tabs pinned */
+.tabbrowser-tab[pinned] .tab-background {
+	border-radius: 50% !important; /* Círculo perfecto */
+	margin: 4px !important; /* Espacio interno para que se vea el borde */
+	width: calc(100% - 8px) !important;
+	height: calc(100% - 8px) !important;
+}
+
+/* Centrar el icono en tabs pinned */
+.tabbrowser-tab[pinned] .tab-icon-stack {
+	margin: 0 auto !important;
+	width: 24px !important;
+	height: 24px !important;
+}
+
+.tabbrowser-tab[pinned] .tab-icon-image {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+/* Asegurar que el stack del tab esté centrado */
+.tabbrowser-tab[pinned] .tab-stack {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+
+/* ESPACIADO: Separar la primera tab normal de las pinned */
+.tabbrowser-tab[fadein]:not([pinned]):not([hidden]) {
+	margin-inline-start: 0 !important;
+}
+
+/* La primera tab NO pinned después de tabs pinned */
+#tabbrowser-tabs .tabbrowser-tab:not([pinned]):not([hidden]):first-of-type,
+#tabbrowser-tabs .tabbrowser-tab[pinned] + .tabbrowser-tab:not([pinned]) {
+	margin-inline-start: 12px !important;
+}
+
+/* Separador visual entre pinned y normales (opcional) */
+.tabbrowser-tab[pinned]:last-of-type::after {
+	content: '';
+	position: absolute;
+	right: -6px;
+	top: 10px;
+	bottom: 10px;
+	width: 1px;
+	background: rgba(255, 255, 255, 0.1);
+	pointer-events: none;
+}
+
+.tabbrowser-tab:hover .tab-background {
+	background: rgba(255,255,255,0.08) !important;
+}
+
+.tabbrowser-tab[selected] .tab-background {
+	background: rgba(255,255,255,0.15) !important;
+}
+
+/* Efectos hover y selected para pinned */
+.tabbrowser-tab[pinned]:hover .tab-background {
+	background: rgba(255,255,255,0.08) !important;
+}
+
+.tabbrowser-tab[pinned][selected] .tab-background {
+	background: rgba(255,255,255,0.15) !important;
+}
+
+.tabbrowser-tab[selected]:not([pinned]) {
+	transform: scale(1.05);
+}
+
+/* Mejor distribución del contenido de la tab */
+.tab-icon-stack {
+	margin-inline-start: 8px !important;
+}
+
+.tab-label-container {
+	margin-inline: 8px !important;
+	flex: 1 !important;
+	overflow: hidden !important;
+}
+
+.tab-label {
+	text-overflow: ellipsis !important;
+	overflow: hidden !important;
+	white-space: nowrap !important;
+}
+
+/* Titlebar spacers */
+.titlebar-spacer[type="pre-tabs"],
+.titlebar-spacer[type="post-tabs"] {
+	width: 30px !important;
+}
+
+:root:not([sizemode="normal"]) .titlebar-spacer[type="pre-tabs"] {
+	display: block !important;
+}
+
+@media (max-width: 500px) {
+	.titlebar-spacer[type="post-tabs"] {
+		display: block !important;
+	}
+}
+
+/* =========================
+   TAB CLOSE BUTTON
+========================= */
+.tab-close-button {
+	display: none !important;
+	opacity: 0;
+	transform: scale(0.8);
+	transition: all 0.2s ease !important;
+	margin-inline-end: 4px !important;
+}
+
+.tabbrowser-tab:hover .tab-close-button {
+	display: flex !important;
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Hide window controls */
+#alltabs-button,
+#TabsToolbar .toolbarbutton-1:not(#tabs-newtab-button),
+.titlebar-buttonbox-container,
+#page-action-buttons,
+#tracking-protection-icon-container,
+#identity-box {
+	display: none !important;
+}
+
+/* =========================
+   NEW TAB BUTTON
+========================= */
+#tabs-newtab-button {
+	opacity: 0;
+	transition: 0.2s opacity ease;
+	margin-inline-start: 4px !important;
+}
+
+#navigator-toolbox:is(:hover, :focus-within, :has([open])) #tabs-newtab-button {
+	opacity: 1;
+}
+
+/* =========================
+   SCROLL DE TABS
+========================= */
+#tabbrowser-arrowscrollbox {
+	overflow-x: auto !important;
+	scrollbar-width: thin !important;
+	scrollbar-color: rgba(255,255,255,0.2) transparent !important;
+}
+
+#tabbrowser-arrowscrollbox::-webkit-scrollbar {
+	height: 6px !important;
+}
+
+#tabbrowser-arrowscrollbox::-webkit-scrollbar-thumb {
+	background: rgba(255,255,255,0.2) !important;
+	border-radius: 3px !important;
+}
+
+#tabbrowser-arrowscrollbox::-webkit-scrollbar-track {
+	background: transparent !important;
+}
+
+/* =========================
+   URLBAR STYLING
+========================= */
+#urlbar-background {
+	border-radius: 10px !important;
+	background: rgba(255,255,255,0.08) !important;
+	border: none !important;
+}
+
+#urlbar {
+	text-align: center !important;
+}
+
+.urlbarView-url {
+	color: var(--toolbar-color) !important;
+}
+
+/* =========================
+   GLOBAL LOOK
+========================= */
+#titlebar {
+	z-index: 2;
+}
+
+/* Rounded context menus/panels */
+menupopup,
+panel {
+	--panel-border-radius: 15px !important;
+}
+
+/* =========================
+   UNIFIED EXTENSIONS GRID
+========================= */
+#unified-extensions-view {
+	width: fit-content !important;
+}
+
+#unified-extensions-panel .panel-subview-body>* {
+	display: grid !important;
+	grid-template-columns: repeat(5, 1fr) !important;
+	justify-items: center !important;
+	gap: 0 !important;
+}
+
+#unified-extensions-panel #unified-extensions-area,
+#unified-extensions-panel #overflowed-extensions-list {
+	display: grid !important;
+	grid-template-columns: repeat(5, 1fr) !important;
+	justify-items: center !important;
+}
+
+:is(panelview, #unified-extensions-area, #overflowed-extensions-list) .toolbaritem-combined-buttons,
+#unified-extensions-panel .unified-extensions-item {
+	margin: 0 !important;
+}
+
+#unified-extensions-panel #unified-extensions-area>.unified-extensions-item,
+#unified-extensions-panel #overflowed-extensions-list>.unified-extensions-item {
+	width: 60.6px !important;
+	height: 60.6px !important;
+	max-width: none !important;
+	max-height: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#unified-extensions-panel .unified-extensions-item-row-wrapper {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#unified-extensions-panel #unified-extensions-area .unified-extensions-item-action-button,
+#unified-extensions-panel #overflowed-extensions-list .unified-extensions-item-action-button {
+	width: 100% !important;
+	height: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#unified-extensions-panel #unified-extensions-area .unified-extensions-item-action-button>.toolbarbutton-badge-stack,
+#unified-extensions-panel #overflowed-extensions-list .unified-extensions-item-action-button>.toolbarbutton-badge-stack,
+#unified-extensions-panel .unified-extensions-list .unified-extensions-item-action-button {
+	display: grid !important;
+	width: 100% !important;
+	height: 100% !important;
+	padding: 20% !important;
+	margin: 0 !important;
+	justify-content: center !important;
+	align-items: center !important;
+}
+
+#unified-extensions-panel .unified-extensions-item-action-button image.toolbarbutton-icon {
+	width: 26px !important;
+	height: 26px !important;
+	margin: auto !important;
+}
+
+#unified-extensions-panel .unified-extensions-list,
+#unified-extensions-panel .unified-extensions-item-menu-button,
+#unified-extensions-panel .unified-extensions-item-contents,
+#unified-extensions-panel .unified-extensions-item-action-button>.toolbarbutton-text {
+	display: none !important;
+}
+
+#unified-extensions-panel .subviewbutton {
+	margin: 0 !important;
+}
+
+#nav-bar-customization-target>.unified-extensions-item {
+	filter: saturate(0%) brightness(120%) !important;
+}
+
+#customization-panelHolder>#unified-extensions-area>toolbarpaletteitem:not([notransition])[place="panel"] {
+	border-block-width: 0 !important;
+	transition: padding var(--drag-drop-transition-duration) ease-in-out !important;
+}
+
+#customization-panelHolder>#unified-extensions-area>toolbarpaletteitem:not([notransition])[place="panel"][dragover="before"] {
+	padding-inline-start: 20px !important;
+}
+
+#customization-panelHolder>#unified-extensions-area>toolbarpaletteitem:not([notransition])[place="panel"][dragover="after"] {
+	padding-inline-end: 20px !important;
+}
+
+/* =========================
+   VERTICAL TABS AUTO-HIDE (SOLO CSS)
+========================= */
+@media (-moz-bool-pref: "userChrome.verticalTabs") {
+	/* Ocultar tabs toolbar horizontal */
+	#TabsToolbar {
+		display: none !important;
+	}
+
+	/* Crear sidebar para tabs verticales - AUTO-HIDE */
+	#sidebar-box {
+		display: flex !important;
+		flex-direction: column !important;
+		min-width: 40px !important;
+		width: 40px !important;
+		max-width: 40px !important;
+		margin: 0 !important;
+		padding: 8px !important;
+		background: rgba(0,0,0,0.3) !important;
+		border-right: 1px solid rgba(255,255,255,0.1) !important;
+		transition: width 0.3s ease, min-width 0.3s ease, max-width 0.3s ease !important;
+		overflow: hidden !important;
+		position: relative !important;
+	}
+
+	/* Expandir en hover */
+	#sidebar-box:hover,
+	#sidebar-box:focus-within {
+		min-width: 250px !important;
+		width: 250px !important;
+		max-width: 250px !important;
+	}
+
+	/* Ocultar texto cuando está colapsado */
+	#sidebar-box:not(:hover) .tab-text,
+	#sidebar-box:not(:hover) .tab-label-container {
+		opacity: 0 !important;
+		width: 0 !important;
+		overflow: hidden !important;
+		transition: opacity 0.2s ease !important;
+	}
+
+	/* Centrar iconos cuando está colapsado */
+	#sidebar-box:not(:hover) .tab-icon-stack {
+		margin: 0 auto !important;
+	}
+
+	/* Vertical tabs container */
+	#sidebar-box #sidebar {
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 4px !important;
+	}
+
+	/* Ajustar navbar */
+	#nav-bar {
+		left: 40px !important;
+		transition: left 0.3s ease !important;
+	}
+
+	#navigator-toolbox:is(:hover, :focus-within) #nav-bar {
+		top: 8px !important;
+		left: 40px !important;
+	}
+
+	/* Tabs verticales estilo */
+	.tabbrowser-tab {
+		width: 100% !important;
+		min-width: unset !important;
+		max-width: unset !important;
+		margin-bottom: 4px !important;
+	}
+
+	.tab-content {
+		padding: 8px !important;
+		display: flex !important;
+		align-items: center !important;
+	}
+
+	.tab-label-container {
+		flex: 1 !important;
+		text-align: left !important;
+		transition: opacity 0.2s ease, width 0.2s ease !important;
+	}
+
+	/* Indicador visual en el borde */
+	#sidebar-box::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 2px;
+		background: rgba(255, 255, 255, 0.1);
+		transition: background 0.2s ease;
+	}
+
+	#sidebar-box:hover::before {
+		background: rgba(255, 255, 255, 0.3);
+	}
+}
+
+/* =========================
+   MEDIA QUERIES - OPCIONAL
+========================= */
+@media (-moz-bool-pref: "animatedFox.squareCorners") {
+	:root * {
+		border-radius: 0px !important;
+	}
+}
+
+@media (-moz-bool-pref: "animatedFox.hideSingleTab") {
+	.tabbrowser-tab:only-of-type {
+		height: 0px !important;
+	}
+
+	#titlebar:has(.tabbrowser-tab:only-of-type):after {
+		content: '';
+		position: fixed !important;
+		right: 0;
+		left: 0;
+		top: 0;
+		height: 1rem;
+	}
+
+	:has(.tabbrowser-tab:only-of-type) #navigator-toolbox:is(:hover, :focus-within, :has([open])) #nav-bar {
+		top: 1rem !important;
+	}
+
+	:has(.tabbrowser-tab:only-of-type) #nav-bar {
+		top: -3rem !important;
+	}
+}
+
+@media (-moz-bool-pref: "animatedFox.showTabCloseButton") {
+	#tabbrowser-tabs .tabbrowser-tab:not([pinned], [selected]):hover .tab-close-button {
+		display: flex !important;
+	}
+}
+
+@media (-moz-bool-pref: "animatedFox.centeredTabs") {
+	#tabbrowser-arrowscrollbox:not([overflowing]) {
+		justify-content: center !important;
+		display: flex !important;
+	}
+}
+
+@media (-moz-bool-pref: "animatedFox.centeredUrl") {
+	#nav-bar {
+		text-align: center;
+	}
+}
