@@ -1,0 +1,55 @@
+General Management:
+- SUPER + Q           Close (kill) the active window
+- ALT + \             Toggle floating mode for the active window
+=================================================================
+Moving Focus:
+- SUPER + h           Move focus left
+- SUPER + l           Move focus right
+- SUPER + k           Move focus up
+- SUPER + j           Move focus down
+=================================================================
+Workspace Switching:
+- SUPER + 1..0        Switch to workspace 1–10
+- SUPER + left        Next workspace
+- SUPER + right       Previous workspace
+=================================================================
+Move Active Window to Workspaces:
+- SUPER + ALT + 1..0        Move active window to workspace 1–10
+- ALT + TAB                 View all Windows
+=================================================================
+Move/Resize Windows:
+- SUPER + Left Click        Move window
+- SUPER + Right Click       Resize window
+- SUPER + SHIFT + ↑         Resize active window (shrink vertically)
+- SUPER + SHIFT + →         Resize active window (grow horizontally)
+- SUPER + SHIFT + ↓         Resize active window (grow vertically)
+- SUPER + SHIFT + ←         Resize active window (shrink horizontally)
+==================================================================
+Volume and Media Control:
+- XF86AudioRaiseVolume      Increase volume
+- XF86AudioLowerVolume      Decrease volume
+- XF86AudioMicMute          Toggle microphone mute
+- XF86AudioMute             Toggle audio mute
+- XF86MonBrightnessUp       Increase screen brightness
+- XF86MonBrightnessDown     Decrease screen brightness
+===================================================================
+Applications:
+- SUPER + w           Launch browser
+- SUPER + R           Reload Config
+- SUPER + Return      Launch terminal (foot)
+- SUPER+ALT+Return    Launch yazi
+- File Explorer       Launch file manager ($fileManager)
+===================================================================
+Rofi Menus:
+- SUPER + R           Open rofi apps
+- SUPER + V           Open clipboard menu
+- SUPER+ALT+G         Open wallpaper select
+- SUPER + T           Open system menu
+===================================================================
+Utilities:
+- SUPER + L                    Lock Screen
+- Print                        Screenshot full screen
+- SUPER + P                    Screenshot region (satty)
+- SUPER+SHIFT + P              Screenshot full (satty)
+- SUPER+ALT+E                  Open rofimoji
+- SUPER+ALT+M                  Open rofimusic

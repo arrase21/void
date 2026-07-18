@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Tu función original (MANTIENE TODOS los navegadores)
+list_browsers_for_dmenu() {
+    local browsers=("floorp" "waterfox" "zen" "qutebrowser" "librewolf" "firefox" "chromium" "google-chrome" "brave-browser" "vivaldi" "microsoft-edge")
+    local path_browsers=()
+    local flatpak_browsers=()
+    local snap_browsers=()
+    local local_browsers=()
+
+    for b in "${browsers[@]}"; do
+        if command -v "$b" >/dev/null 2>&1; then
+            path_browsers+=("$b")
+        fi
+    done
+
+    if command -v flatpak >/dev/null 2>&1; then
+        flatpak list --app 2>/dev/null | grep -iE "(waterfox|zen|firefox|chromium|chrome|brave|vivaldi|edge|qutebrowser|librewolf)" | awk '{print $1}' | while IFS= read -r line; do
+            flatpak_browsers+=("$line")
+        done
+    fi
+
+    if command -v snap >/dev/null 2>&1; then
+        snap list 2>/dev/null | grep -iE "(waterfox|zen|firefox|chromium|chrome|brave|vivaldi|edge|qutebrowser|librewolf)" | awk '{print $1}' | while IFS= read -r line; do
+            snap_browsers+=("$line")
+        done
+    fi
+
+    if [ -d "$HOME/.local/share/applications" ]; then
+        for desktop_file in "$HOME/.local/share/applications"/*.desktop; do
+            if [ -f "$desktop_file" ] && grep -qi "browser" "$desktop_file"; then
+                browser_name=$(grep -i "^Name=" "$desktop_file" | head -1 | sed 's/Name=//')
+                [ -n "$browser_name" ] && local_browsers+=("$browser_name")
+            fi
+        done
+    fi
+
+    printf "%s\n" "${path_browsers[@]}" "${flatpak_browsers[@]}" "${snap_browsers[@]}" "${local_browsers[@]}" | sort -u
+}
+
+find_desktop_file() {
+    local browser_name="$1"
+    local lower_browser=$(echo "$browser_name" | tr '[:upper:]' '[:lower:]')
+    declare -A desktop_map=(
+        ["brave-browser"]="brave-browser.desktop"
+        ["brave"]="brave-browser.desktop"
+        ["firefox"]="firefox.desktop"
+        ["librewolf"]="librewolf.desktop"
+        ["chromium"]="chromium-browser.desktop"
+        ["google-chrome"]="google-chrome.desktop"
+        ["vivaldi"]="vivaldi-stable.desktop"
+        ["qutebrowser"]="qutebrowser.desktop"
+        ["waterfox"]="waterfox.desktop"
+        ["zen"]="zen.desktop"
+        ["floorp"]="floorp.desktop"
+        ["microsoft-edge"]="microsoft-edge.desktop"
+    )
+    # 1. Cache case-insensitive
+    [[ -n "${desktop_map[$lower_browser]}" ]] && echo "${desktop_map[$lower_browser]}" && return
+    # 2. Flatpak/Snap
+    if [[ "$browser_name" == com.* ]]; then echo "${browser_name}.desktop"; return; fi
+    # 3. Búsqueda case-insensitive ULTRA-rápida
+    for dir in /usr/share/applications /usr/local/share/applications; do
+        if [ -d "$dir" ]; then
+            # Busca ignorando case: waterfox OR WaterFox OR WATERFOX
+            desktop_file=$(ls "$dir"/*[wW][aA][tT][eE][rR][fF][oO][xX]*.desktop 2>/dev/null | head -1 | xargs basename 2>/dev/null)
+            [ -n "$desktop_file" ] && echo "$desktop_file" && return
+            # Fallback genérico case-insensitive
+            desktop_file=$(ls "$dir"/*"$lower_browser"*".desktop" 2>/dev/null | head -1 | xargs basename 2>/dev/null)
+            [ -n "$desktop_file" ] && echo "$desktop_file" && return
+        fi
+    done
+    echo ""
+}
+
+case $1 in
+    "-p"|"--prompt")
+        chosen=$(list_browsers_for_dmenu | gum choose --header="  Set default browser")
+        ;;
+    *)
+        chosen=$(list_browsers_for_dmenu | rofi -config "$HOME/.config/mango/rofi/themes/browser.rasi" -show drun -dmenu -i -p " ")
+        ;;
+esac
+
+[ -z "$chosen" ] && exit 1
+
+desktop_file=$(find_desktop_file "$chosen")
+
+if [ -n "$desktop_file" ]; then
+    xdg-settings set default-web-browser "$desktop_file" && 
+    notify-send "✅ Default Browser" "Set to: $chosen ($desktop_file)"
+else
+    notify-send "❌ Error" "No .desktop found for '$chosen'"
+    exit 1
+fi

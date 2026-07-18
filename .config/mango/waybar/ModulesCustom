@@ -1,0 +1,112 @@
+{
+  "custom/menu":{
+    "format": " |",
+    "on-click":"rofi -config $HOME/.config/mango/rofi/config.rasi -show drun",
+  },
+
+  "custom/power": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "wlogout -C ~/.config/mango/wlogout/style.css -l  ~/.config/mango/wlogout/layout  -b 6 --protocol layer-shell",
+    "on-click-right": "foot --app-id=power-term -e bash ~/.config/mango/scripts/power_profile.sh",
+    "menu-file": "foot --app-id=power-term -e bash ~/.config/mango/scripts/power_profile.sh",
+    "menu-actions": {
+      "performance": "foot --app-id=power-term -e bash ~/.config/mango/scripts/power_profile.sh",
+      "schedutil": "bash ~/.config/mango/scripts/power-profile --schedutil"
+    }
+  },
+
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "custom/screenrecording-indicator": {
+    "on-click": "cmd-screenrecord",
+    "exec": "~/.config/mango/waybar/indicators/screen-recording.sh",
+    "signal": 8,
+    "return-type": "json"
+  },
+
+"custom/mtp": {
+    "exec": "/home/arrase/.local/bin/waybar-android.sh",
+    "on-click": "/home/arrase/.local/bin/mtp-auto-mount.sh mount",
+    "on-click-right": "/home/arrase/.local/bin/mtp-auto-mount.sh umount",
+    "interval": 5
+},
+
+"custom/mpris": {
+    "exec": "python3 -u ~/.local/bin/scroll.py",
+    "format": "{text}",
+    "return-type": "json",
+    // "on-click": "eww close music-widget && eww open music-widget",
+    "on-click": "touch /tmp/qs-media-toggle",
+    "on-click-middle": "playerctl -a play-pause",
+    "on-click-right": "playerctl -a previous"
+  },
+
+"custom/weather": {
+    "format": "{}",
+    "format-alt": "{alt}: {}",
+    "format-alt-click": "click",
+    "interval": 3600,
+    "return-type": "json",
+    "exec": "$HOME/.config/hypr/UserScripts/WeatherWrap.sh",
+    "tooltip": true,
+  },
+
+  "custom/browser": {
+    "format": " ",
+    "on-click": "xdg-open https://",
+    "tooltip": true,
+    "tooltip-format": "Launch Browser",
+  },
+
+"custom/cava_mviz": {
+	"exec": "$HOME/.config/mango/scripts/WaybarCava.sh",
+	"format": "{}"
+},
+
+"custom/weather": {
+	"format": "{}",
+	"format-alt": "{alt}: {}",
+	"format-alt-click": "click",
+	"interval": 3600,
+	"return-type": "json",
+	"exec": "$HOME/.config/mango/scripts/WeatherWrap.sh",
+	//"exec-if": "ping wttr.in -c1",
+	"tooltip": true,
+},
+
+  "custom/separator#dot": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/separator#dot-line": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/separator#line": {
+    "format": "|",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/separator#blank": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/separator#blank_2": {
+    "format": "  ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/separator#blank_3": {
+    "format": "   ",
+    "interval": "once",
+    "tooltip": false
+  }
+
+}

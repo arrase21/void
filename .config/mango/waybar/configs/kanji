@@ -1,0 +1,46 @@
+{
+"include": [
+  "$HOME/.config/mango/waybar/Modules",
+  "$HOME/.config/mango/waybar/ModulesWorkspaces",
+  "$HOME/.config/mango/waybar/ModulesCustom",
+  "$HOME/.config/mango/waybar/ModulesGroups",
+  ],
+//"mode": "dock",
+"layer": "top",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+
+"modules-left": [
+	"custom/menu",
+  "custom/separator#blank",
+  "cpu",
+  "memory",
+  "temperature",
+	"custom/separator#line",
+	"custom/weather",
+	],
+
+"modules-center": [
+	"custom/separator#dot-line",
+	"clock",
+	"custom/separator#line",
+	"ext/workspaces#kanji",
+	"custom/separator#dot-line",
+ 	], 
+
+"modules-right": [
+  "custom/mpris",
+  "group/tray-expander",
+  "custom/separator#line",
+	"network",
+	"custom/separator#line",
+	"bluetooth",
+	"custom/separator#line",
+	"group/audio",
+	"custom/separator#line",
+  "backlight",
+	"custom/separator#line",
+	"custom/power",
+	],
+}

@@ -1,0 +1,182 @@
+/* @import url('./wallust/colors-waybar.css'); */
+@import url('./matugen/matugen-waybar.css');
+
+/* Variables de color con fallback */
+/* @define-color bordercolor @color11; */
+/* @define-color textcolor1 @color3; */
+/* @define-color textcolor2 @color7; */
+/* @define-color textcolor4 @color5; */
+/* @define-color foreground #585858; */
+/* @define-color background #282828; */
+
+@define-color bordercolor @on_secondary;
+@define-color textcolor1 #a9b665;
+@define-color textcolor2 @on_primary_container;
+@define-color textcolor3 #ea6962;
+@define-color textcolor4 @inverse_primary;
+@define-color textcolor5 #d4be98;
+@define-color textcolor6 #d8a657;
+@define-color foreground #585858;
+@define-color background @surface_dim;
+
+* {
+  background-color:#1d2021;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+}
+
+/* #282828 */
+/* #ea6962 */
+/* #a9b665 */
+/* #d8a657 */
+/* #7daea3 */
+/* #d3869b */
+/* #89b482 */
+/* #d4be98 */
+
+#taskbar,
+#workspaces {
+    background: transparent;
+    margin: 2px 18px 3px 1px;
+    margin-left: 6px;
+    padding: 0px 2px;
+    border-radius: 5px 5px 5px 5px;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.8;
+    color: @textcolor1;
+}
+#taskbar button,
+#workspaces button {
+    all: initial;
+    padding: 0px 6px;
+    margin: 0px 1.5px;
+    border-radius: 3px 3px 3px 3px;
+    color: @textcolor3;
+    background: transparent;
+    transition: all 0.1s linear;
+}
+#taskbar button.active,
+#workspaces button.active {
+    color: @textcolor1;
+    border-radius: 3px 3px 3px 3px;
+    background: transparent;
+    min-width: 9px;
+    transition: all 0.1s linear;
+}
+
+#taskbar button.hidden,
+#workspaces button.hidden {
+    color: @textcolor6;
+    background: transparent;
+    border-radius: 3px 3px 3px 3px;
+    min-width: 9px;
+    transition: all 0.1s linear;
+}
+
+#taskbar button.hover,
+#workspaces button:hover {
+    color: @textcolor1;
+    background: @workspacesbackground2;
+    border-radius: 5px 5px 5px 5px;
+    opacity:0.7;
+}
+
+/* #workspaces button { */
+/*   all: initial; */
+/*   padding: 0 6px; */
+/*   margin: 0 1.5px; */
+/*   min-width: 9px; */
+/*   background-color: @background; */
+/* } */
+
+#custom-mtp,
+
+#cpu {
+  margin:0px 6px;
+  color: #ea6962;
+}
+#temperature{
+  margin:0px 6px;
+  color: #a9b665;
+}
+#memory{
+  margin:0px 6px;
+    color: #a9b665;
+}
+
+#custom-mpris,
+#backlight{
+  color:  @textcolor5;
+  padding:0px 2px;
+  margin:0px 4px;
+}
+#battery,
+#pulseaudio{
+  color:  @textcolor5;
+  padding:0px 2px;
+  margin:0px 5px;
+}
+#custom-menu{
+  color:@textcolor1;
+}
+#custom-screenrecording-indicator,
+#custom-update {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#tray {
+  margin-right: 10px;
+}
+
+#bluetooth {
+  margin:0px 5px;
+  color:  @textcolor5;
+}
+
+#network {
+  color:  @textcolor5;
+  margin:0px 5px;
+}
+
+#custom-expand-icon {
+  color: @textcolor3;
+  margin-right: 15px;
+}
+
+tooltip {
+  padding: 2px;
+  background-color: @background;
+  color: @foreground;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+
+#clock {
+    color: @textcolor1;
+    padding: 0rem 1rem;
+}
+
+#custom-screenrecording-indicator {
+  min-width: 12px;
+  margin-left: 8.75px;
+  font-size: 10px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #a55555;
+}
+
+#custom-power {
+  color:@textcolor6;
+  padding: 0rem 0.4rem;
+  margin: 0rem 0.4rem;
+}

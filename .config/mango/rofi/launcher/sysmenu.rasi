@@ -1,0 +1,181 @@
+configuration {
+    show-icons:                     true;
+    click-to-exit: 		            true;
+    location:                       0;
+}
+
+@theme "~/.config/mango/rofi/matugen/colors-rofi.rasi"
+/*****----- Global Properties -----*****/
+* {
+    font: "Iosevka 12";
+    element-bg:           @on-secondary-fixed;
+    foreground-colour:    @secondary;
+    primary:              @on-secondary;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @element-bg;
+    text-color:                     @foreground-colour;
+    border:                         2px;
+    border-color:                   @foreground-colour;
+    border-radius:                  10px;
+    width:                          25%;
+    anchor:                         center;
+    x-offset:                       0;
+    y-offset:                       0;
+}
+
+prompt {
+    enabled: 			            true;
+    padding: 			            8px;
+    background-color: 		    transparent;
+    text-color: 		          @foreground-colour;
+}
+
+textbox-prompt-colon {
+    expand: 			            false;
+    str: 			                "";
+    border-radius:            100%;
+    background-color:         @element-bg;
+    text-color:               @foreground-colour;
+    padding:                  8px 12px 8px 12px;
+    font:			                "Iosevka Nerd Font 10";
+}
+
+entry {
+
+    placeholder: "Go...";
+    background-color:               @primary;
+    text-color:                     inherit;
+    placeholder-color:              @foreground-colour;
+    expand:                         true;
+    horizontal-align:               0;
+    blink:                          true;
+    border:                  	      0px 0px 2px 0px;
+    border-radius:                  10px;
+    padding:                        4px;
+}
+
+inputbar {
+	children: 		                [ textbox-prompt-colon, entry ];
+    background-color:               @element-bg;
+    text-color:                     @foreground-colour;
+    expand:                         false;
+    border:                         0px 0px 0px 0px;
+    border-radius:                  0px;
+    border-color:                   @element-bg;
+    margin:                         0px 0px 0px 0px;
+    padding:                        0px;
+    position:                       center;
+}
+
+case-indicator {
+    background-color:               @foreground-colour;
+    text-color:                     @element-bg;
+    spacing:                        0;
+}
+
+
+listview {
+    background-color:               @element-bg;
+    columns:                        1;
+    lines:                          11;
+    spacing:                        1px;
+    cycle:                          true;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+/* ---- Scrollbar ---- */
+scrollbar {
+  border:							0px;
+  border-radius:					10px;
+  background-color:					transparent;
+  handle-color: 					@foreground-colour;
+  handle-width: 					2px ;
+  padding:      					0;
+}
+
+mainbox {
+    background-color:               @element-bg;
+    children:                       [ inputbar, message, listview ];
+    spacing:                        15px;
+    padding:                        15px;
+}
+
+element {
+    background-color:               transparent;
+    text-color:                     @foreground-colour;
+    orientation:                    horizontal;
+    border-radius:                  4px;
+    padding:                        4px;
+}
+
+element-icon {
+    background-color:               inherit;
+    text-color:                     inherit;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    size:                           24px;
+    border:                         0px;
+}
+
+element-text {
+    background-color: 		        inherit;
+    text-color:       		        inherit;
+    expand:                         true;
+    horizontal-align:               0;
+    vertical-align:                 0.5;
+    margin:                         2px 0px 2px 2px;
+}
+
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @element-bg;
+    text-color:                     @foreground-colour;
+    border-radius:                  9px;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @element-bg;
+    text-color:                     @foreground-colour;
+}
+
+element-text selected,
+element selected {
+    background-color:               @primary;
+    text-color:                     @foreground-colour;
+    border:                  	      0px 0px 0px 0px;
+    border-radius:                  10px;
+    // border-color:                   @element-bg;
+}
+
+element selected.urgent {
+    background-color:               @element-bg;
+    text-color:                     @element-bg;
+}
+
+element selected.active {
+    background-color:               @element-bg;
+    color:                          @element-bg;
+}
+
+/*****----- Message -----*****/
+message {
+    background-color:            	transparent;
+    border:                      	0px;
+}
+error-message {
+    padding:                        20px;
+}
+textbox {
+    padding:                        10px;
+    border-radius:                  10px;
+	  background-color:               @error;
+    text-color:                     @element-bg;
+    vertical-align:                 0.5;
+    horizontal-align:               0.5;
+}

@@ -1,0 +1,52 @@
+[config]
+
+# [templates.btop]
+# input_path = '~/.config/matugen/templates/btop.theme'
+# output_path = '~/.config/btop/themes/matugen.theme'
+# post_hook = 'pkill -USR2 btop || true'
+#
+# [templates.gtk3]
+# input_path = '~/.config/matugen/templates/gtk-colors.css'
+# output_path = '~/.config/gtk-3.0/colors.css'
+# post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme ""; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}'
+#
+# [templates.gtk4]
+# input_path = '~/.config/matugen/templates/gtk-colors.css'
+# output_path = '~/.config/gtk-4.0/colors.css'
+
+[templates.quickshell]
+input_path = '~/.config/matugen/templates/quickshell-colors.json'
+output_path = '~/.cache/qs/matugen-colors.json'
+post_hook = 'touch /tmp/qs-color-update'
+
+[templates.hyprlock]
+input_path  = '~/.config/matugen/templates/hyprlock-colors.conf'
+output_path = '~/.config/hypr/hyprlock-colors.conf'
+
+# [templates.qt5ct]
+# input_path = '~/.config/matugen/templates/qtct-colors.conf'
+# output_path = '~/.config/qt5ct/colors/matugen.conf'
+#
+# [templates.qt6ct]
+# input_path = '~/.config/matugen/templates/qtct-colors.conf'
+# output_path = '~/.config/qt6ct/colors/matugen.conf'
+
+[templates.mango]
+input_path = '~/.config/matugen/templates/mango-colors.conf'
+output_path = '~/.config/mango/colors.conf'
+
+[templates.rofi]
+input_path = '~/.config/matugen/templates/rofi-colors.rasi'
+output_path = '~/.config/mango/rofi/matugen/colors-rofi.rasi'
+
+[templates.waybar]
+input_path = '~/.config/matugen/templates/matugen-waybar.css'
+output_path = '~/.config/mango/waybar/matugen/matugen-waybar.css'
+
+[templates.starship]
+input_path = '~/.config/matugen/templates/starship-colors.toml'
+output_path = '~/.config/starship.toml'
+
+[templates.yazi]
+input_path = '~/.config/matugen/templates/yazi-theme.toml'
+output_path = '~/.config/yazi/theme.toml'

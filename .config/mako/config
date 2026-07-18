@@ -1,0 +1,19 @@
+# 🦊 Config de Mako generado automáticamente por Matugen
+# Fri Jul 17 06:00:46 PM -05 2026
+
+font=JetBrainsMono Nerd Font 10
+max-visible=10
+ignore-timeout=1
+
+background-color=#1a1110ee
+text-color=#f1dedc
+border-color=#ffb4ab
+progress-color=#ffb4ab
+
+margin=1
+padding=1
+border-size=4
+border-radius=8
+
+[urgency=high]
+border-color=#ffb4ab

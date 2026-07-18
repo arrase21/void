@@ -1,0 +1,119 @@
+// Config //
+
+ @theme "~/.config/mango/rofi/colors.rasi"
+// @theme "~/.config/mango/rofi/matugen/colors-rofi.rasi"
+* {
+    font: "Iosevka 12";
+    element-bg:           @on-secondary-fixed;
+    foreground-colour:    @secondary;
+    primary:              @on-secondary;
+}
+configuration {
+    modi:                        "drun";
+    show-icons:                  false;
+}
+
+
+
+// Main //
+window {
+    width:                       23em;
+    height:                      30em;
+    transparency:                "real";
+    fullscreen:                  false;
+    enabled:                     true;
+    cursor:                      "default";
+    spacing:                     0em;
+    padding:                     0em;
+    border-color:                @primary;
+    background-color:            @element-bg;
+}
+mainbox {
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     0.5em;
+    orientation:                 vertical;
+    children:                    [ "wallbox" , "listbox" ];
+    background-color:            transparent;
+}
+wallbox {
+    spacing:                     0em;
+    padding:                     0em;
+    expand:                      false;
+    orientation:                 horizontal;
+    background-color:            @color5;
+    background-image:            url("~/Pictures/wallpapers/totoro-catppuccin.png", width);
+    children:                    [ "wallframe" , "inputbar" ];
+}
+wallframe {
+    width:                       5em;
+    spacing:                     0em;
+    padding:                     0em;
+    expand:                      false;
+    background-color:            @color5;
+    background-image:            url("~/Pictures/wallpapers/totoro-catppuccin.png", width);
+}
+
+
+// Inputs //
+inputbar {
+    enabled:                     true;
+    padding:                     0em;
+    children:                    [ "entry" ];
+    background-color:            @element-bg;
+    expand:                      true;
+}
+entry {
+    enabled:                     true;
+    padding:                     1.8em;
+    text-color:                  @foreground-colour;
+    background-color:            transparent;
+}
+
+// Lists //
+listbox {
+    spacing:                     0em;
+    padding:                     0em;
+    orientation:                 vertical;
+    children:                    [ "dummy" , "listview" , "dummy" ];
+    background-color:            transparent;
+}
+listview {
+    enabled:                     true;
+    padding:                     0.5em;
+    columns:                     1;
+    lines:                       11;
+    cycle:                       true;
+    fixed-height:                true;
+    fixed-columns:               false;
+    expand:                      false;
+    cursor:                      "default";
+    background-color:            transparent;
+    text-color:                  @primary;
+}
+dummy {
+    spacing:                     0em;
+    padding:                     0em;
+    background-color:            transparent;
+}
+
+
+// Elements //
+element {
+    enabled:                     true;
+    padding:                     0.5em;
+    cursor:                      pointer;
+    background-color:            @element-bg;
+    text-color:                  @element-bg;
+}
+element selected.normal {
+    background-color:            @primary;
+    text-color:                  @element-bg;
+}
+element-text {
+    vertical-align:              0.0;
+    horizontal-align:            0.0;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  @foreground-colour;
+}
