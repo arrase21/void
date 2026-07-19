@@ -23,7 +23,7 @@ intel-video-accel zramen pipewire pipewire-pulseaudio wireplumber NetworkManager
 
 wayland_pkgs="
 mangowc grim slurp swappy cliphist Waybar mako
-mpv rust cargo awww sox ImageMagick
+mpv rust cargo awww sox ImageMagick matugen
 sound-theme-freedesktop brightnessctl
 "
 
@@ -127,14 +127,6 @@ EOF
   echo "active network"
 
   ok "updated"
-}
-
-install_rust_tools() {
-  title "Rust tools"
-  for pkg in matugen; do
-    cargo install --list | grep -q "$pkg" || cargo install "$pkg"
-  done
-  ok "Rust tools installed"
 }
 
 install_fonts() {
