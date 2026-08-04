@@ -60,8 +60,8 @@ connections_func() {
     action=$(get_action "$chosen")
 
     case "$action" in
-        wifi) bash ~/scripts/rofi-wifi ;;
-        bluetooth) bash ~/scripts/rofi-bluetooth ;;
+        wifi) foot -e gazelle ;;
+        bluetooth) foot -e bluetui ;;
         back) system_menu ;;
     esac
 }
@@ -95,7 +95,6 @@ screenshot_func() {
 
 misc_func() {
     options="  Toggle DND|dnd
-  Toggle Cafein|cafein
 󰈈  Toggle Eye Saver|eye
 󰌍  Back|back"
 
@@ -104,7 +103,6 @@ misc_func() {
 
     case "$action" in
         dnd) makoctl mode -t dnd ;;
-        cafein) bash $HOME/scripts/cafein toggle -n ;;
         eye) bash $HOME/.config/mango/scripts/Sunset.sh ;;
         back) system_menu ;;
     esac
@@ -127,7 +125,6 @@ maintain_menu() {
             find ~/.cache -mindepth 1 -maxdepth 1 \
                 ! -name "spotify" \
                 ! -name "cliphist" \
-                ! -name "paru" \
                 -exec rm -rf {} + ;;
         clipboard)
             rm -rf ~/.cache/cliphist ;;
@@ -142,8 +139,6 @@ maintain_menu() {
 settings_func() {
     options="  Reload Shell|reload
   Set Default Apps|apps
-󰌁  Customize Rice|custom
-󰚰  Update Config|update
 󰌍  Back|back"
 
     chosen=$(run_menu "$options")
@@ -152,14 +147,10 @@ settings_func() {
     case "$action" in
         reload)
             pkill waybar
-            waybar >/dev/null 2>&1 & ;;
+            waybar -c ~/.config/mango/waybar/config -s ~/.config/mango/waybar/style.css >/dev/null 2>&1 & ;;
         apps)
             bash ~/.config/mango/scripts/set-default-browser ;;
-        custom)
-            customize_func ;;
-        update)
-            foot -e bash ~/Dotfiles/bin/update_binarydots ;;
-        back) system_menu ;;
+          back) system_menu ;;
     esac
 }
 
@@ -168,8 +159,7 @@ settings_func() {
 # -------------------------------------------------
 
 customize_func() {
-    options="  Set Style Locks|locks
-  Wallpapers|walls
+    options="  Wallpapers|walls
 󰌁  Themes|themes
 󰌍  Back|back"
 
@@ -177,7 +167,6 @@ customize_func() {
     action=$(get_action "$chosen")
 
     case "$action" in
-        locks) lock_menu ;;
         walls) set_wallpaper ;;
         themes) theme_menu ;;
         back) settings_func ;;

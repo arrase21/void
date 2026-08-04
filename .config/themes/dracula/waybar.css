@@ -1,14 +1,6 @@
 /* @import url('./wallust/colors-waybar.css'); */
 @import url('./matugen/matugen-waybar.css');
 
-/* Variables de color con fallback */
-/* @define-color bordercolor @color11; */
-/* @define-color textcolor1 @color3; */
-/* @define-color textcolor2 @color7; */
-/* @define-color textcolor4 @color5; */
-/* @define-color foreground #585858; */
-/* @define-color background #282828; */
-
 @define-color bordercolor @on_secondary;
 @define-color textcolor1 @inverse_primary;
 @define-color textcolor3 @primary_fixed_dim;
@@ -48,13 +40,14 @@
     margin: 0px 1.5px;
     border-radius: 3px 3px 3px 3px;
     color: @textcolor3;
-    background-color: @background;
+    background: transparent;
     transition: all 0.1s linear;
 }
 #taskbar button.active,
 #workspaces button.active {
     color: @textcolor1;
     border-radius: 3px 3px 3px 3px;
+    background: transparent;
     min-width: 9px;
     transition: all 0.1s linear;
 }
@@ -62,7 +55,7 @@
 #taskbar button.hidden,
 #workspaces button.hidden {
     color: @textcolor6;
-    /* background: @foreground; */
+    background: transparent;
     border-radius: 3px 3px 3px 3px;
     min-width: 9px;
     transition: all 0.1s linear;
@@ -76,34 +69,26 @@
     opacity:0.7;
 }
 
-/* #workspaces button { */
-/*   all: initial; */
-/*   padding: 0 6px; */
-/*   margin: 0 1.5px; */
-/*   min-width: 9px; */
-/*   background-color: @background; */
-/* } */
-
 #custom-mtp,
 
 #cpu {
-  margin:0px 6px;
-  color: @textcolor3;
+  margin:0px 5px;
+  color: @textcolor1;
 }
 #temperature{
-  margin:0px 6px;
-  color: @textcolor3;
+  margin:0px 5px;
+  color: #a9b665;
 }
 #memory{
-  margin:0px 6px;
-    color: @textcolor3;
+  margin:0px 5px;
+    color: #a9b665;
 }
 
 #custom-mpris,
 #backlight{
   color:  @textcolor5;
   padding:0px 2px;
-  margin:0px 4px;
+  margin:0px 5px;
 }
 #battery,
 #pulseaudio{
@@ -121,7 +106,7 @@
 }
 
 #tray {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 #bluetooth {
@@ -135,18 +120,14 @@
 }
 
 #custom-expand-icon {
-  color: @textcolor3;
-  margin-right: 15px;
+  color: @textcolor1;
+  margin-right: 5px;
 }
 
 tooltip {
   padding: 2px;
   background-color: @background;
   color: @foreground;
-}
-
-#custom-update {
-  font-size: 10px;
 }
 
 
@@ -171,5 +152,5 @@ tooltip {
 #custom-power {
   color:@textcolor6;
   padding: 0rem 0.4rem;
-  margin: 0rem 0.4rem;
+  margin:0px 5px;
 }

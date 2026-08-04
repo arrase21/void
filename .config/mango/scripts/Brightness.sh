@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script for Monitor backlights (if supported) using brightnessctl
 
-iDIR="$HOME/.config/swaync/icons"
+iDIR="$HOME/.config/mango/icons"
 notification_timeout=1000
 step=1  # INCREASE/DECREASE BY THIS VALUE
 

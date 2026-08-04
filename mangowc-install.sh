@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
@@ -16,9 +17,9 @@ ok(){ echo -e "\033[1;32m✔ $1\033[0m"; }
 ##################################
 
 core_pkgs="
-bc curl wget unzip 7zip git jq inxi xdg-user-dirs playerctl wiremix
-pamixer bluetui bluez dbus elogind linux-firmware-intel mesa-dri
-intel-video-accel zramen pipewire pipewire-pulseaudio wireplumber NetworkManager
+bc curl wget unzip 7zip git jq inxi xdg-user-dirs playerctl wiremix libspa-bluetooth
+pamixer bluetui bluez dbus elogind linux-firmware-intel mesa-dri rsync
+intel-video-accel zramen pipewire wireplumber NetworkManager udevil
 "
 
 wayland_pkgs="
@@ -28,9 +29,9 @@ sound-theme-freedesktop brightnessctl
 "
 
 desktop_apps_pkgs="
-ghostty foot thunar telegram-desktop rofi
+ghostty foot Thunar telegram-desktop rofi
 yazi fd bat fzf eza fish-shell tmux btop
-go tree-sitter-cli
+go tree-sitter-cli lazygit
 "
 
 build_deps="
@@ -61,20 +62,20 @@ install_dependencies() {
 clone_dotfiles() {
   title "Dotfiles"
   mkdir -p "$HOME/repos"
-  if [ ! -d "$HOME/repos/opensuseTumbleweed/.git" ]; then
+  if [ ! -d "$HOME/repos/void/.git" ]; then
     step "Clon Repo"
-    rm -rf "$HOME/repos/opensuseTumbleweed"
-    git clone https://github.com/arrase21/opensuseTumbleweed.git "$HOME/repos/opensuseTumbleweed"
+    rm -rf "$HOME/repos/void"
+    git clone https://github.com/arrase21/void.git "$HOME/repos/void"
   else
     step "Update exist repo"
-    git -C "$HOME/repos/opensuseTumbleweed" pull --rebase
+    git -C "$HOME/repos/void" pull --rebase
   fi
-  ok "Dotfiles ready in $HOME/repos/opensuseTumbleweed"
+  ok "Dotfiles ready in $HOME/repos/void"
 }
 
 copy_configs() {
   title "Install configs"
-  BASE="$HOME/repos/opensuseTumbleweed"
+  BASE="$HOME/repos/void"
   mkdir -p "$HOME/.config" "$HOME/.local" "$HOME/Pictures"
 
   if [ ! -d "$BASE" ]; then
@@ -89,44 +90,6 @@ copy_configs() {
   [ -d "$BASE/.icons" ] && rsync -av --no-perms "$BASE/.icons/" "$HOME/.icons/"
   [ -d "$BASE/wallpapers" ] && rsync -a --no-perms "$BASE/wallpapers/" "$HOME/Pictures/wallpapers/"
   ok "Already config"
-}
-
-setup() {
-  title "Configurando servicios y XDG"
-  xdg-user-dirs-update
-
-  if [ -f "$HOME/repos/opensuseTumbleweed/.config/user-dirs.dirs" ]; then
-    cp "$HOME/repos/opensuseTumbleweed/.config/user-dirs.dirs" "$HOME/.config/"
-    xdg-user-dirs-update
-  fi
-
-  sudo ln -sf /etc/sv/dbus /var/service/
-  echo "dbus active"
-  sudo ln -sf /etc/sv/elogind /var/service/
-  echo "elogind active"
-  step "Configurando zramen"
-  sudo sed -i 's/^#export ZRAM_COMP_ALGORITHM=.*/export ZRAM_COMP_ALGORITHM=lz4/' /etc/sv/zramen/conf
-  sudo sed -i 's/^#export ZRAM_SIZE=.*/export ZRAM_SIZE=100/' /etc/sv/zramen/conf
-  sudo ln -sf /etc/sv/zramen /var/service/
-  echo "zram active"
-
-  step "Configurando swappiness"
-  sudo tee /etc/sysctl.d/99-custom.conf > /dev/null << 'EOF'
-vm.swappiness=180
-vm.watermark_boost_factor=0
-vm.watermark_scale_factor=125
-vm.page-cluster=0
-EOF
-  sudo sysctl --system
-
-  sudo ln -sf /etc/sv/bluetoothd /var/service/
-  echo "bluetoothd active"
-  sudo rm -f /var/service/dhcpcd
-  echo "delete dhcpcd"
-  sudo ln -sf /etc/sv/NetworkManager /var/service/
-  echo "active network"
-
-  ok "updated"
 }
 
 install_fonts() {
@@ -151,6 +114,47 @@ install_fonts() {
   ok "Fonts installed"
 }
 
+setup() {
+  title "Configurando servicios y XDG"
+  xdg-user-dirs-update
+
+  if [ -f "$HOME/repos/void/.config/user-dirs.dirs" ]; then
+    cp "$HOME/repos/void/.config/user-dirs.dirs" "$HOME/.config/"
+    xdg-user-dirs-update
+  fi
+
+  sudo ln -sf /etc/sv/dbus /var/service/
+  echo "dbus active"
+  sudo ln -sf /etc/sv/elogind /var/service/
+  echo "elogind active"
+  step "Configurando zramen"
+  sudo sed -i 's/^#export ZRAM_COMP_ALGORITHM=.*/export ZRAM_COMP_ALGORITHM=lz4/' /etc/sv/zramen/conf
+  sudo sed -i 's/^#export ZRAM_SIZE=.*/export ZRAM_SIZE=100/' /etc/sv/zramen/conf
+  sudo ln -sf /etc/sv/zramen /var/service/
+  echo "zram active"
+
+  step "Configurando swappiness"
+  sudo tee /etc/sysctl.d/99-custom.conf > /dev/null << 'EOF'
+vm.swappiness=180
+vm.watermark_boost_factor=0
+vm.watermark_scale_factor=125
+vm.page-cluster=0
+EOF
+  sudo sysctl --system
+
+  sudo ln -sf /etc/sv/bluetoothd /var/service/
+  echo "bluetoothd active"
+  sudo rm -rf /var/service/dhcpcd
+  echo "delete dhcpcd"
+  sleep 3
+  sudo ln -sf /etc/sv/NetworkManager /var/service/
+  echo "active network"
+
+  ok "updated"
+}
+
+
+
 ##################################
 # MAIN
 ##################################
@@ -162,9 +166,8 @@ main() {
   install_dependencies
   clone_dotfiles
   copy_configs
-  setup
-  install_rust_tools
   install_fonts
+  setup
   title "INSTALL COMPLETE"
   echo "👉 Restart session recommended"
   echo "📄 Log saved at: $LOG"

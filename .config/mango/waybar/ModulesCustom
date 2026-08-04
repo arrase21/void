@@ -7,7 +7,8 @@
   "custom/power": {
     "format": "",
     "tooltip": false,
-    "on-click": "wlogout -C ~/.config/mango/wlogout/style.css -l  ~/.config/mango/wlogout/layout  -b 6 --protocol layer-shell",
+    "on-click": "foot --app-id=otter -e otter-launcher po",
+    //"on-click": "wlogout -C ~/.config/mango/wlogout/style.css -l  ~/.config/mango/wlogout/layout  -b 6 --protocol layer-shell",
     "on-click-right": "foot --app-id=power-term -e bash ~/.config/mango/scripts/power_profile.sh",
     "menu-file": "foot --app-id=power-term -e bash ~/.config/mango/scripts/power_profile.sh",
     "menu-actions": {

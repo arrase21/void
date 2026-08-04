@@ -1,0 +1,93 @@
+[overlay]
+overlay_cmd = "chafa -s x10 $HOME/.config/otter-launcher/image.png"
+overlay_trimmed_lines = 1
+move_overlay_right = 32
+
+[interface]
+move_interface_down = 1
+# customized header & list prefix
+header = """
+    ┌ \u001B[1;34m  $USER@$(echo $HOSTNAME) \u001B[0m───┐
+    │ \u001B[90m󱎘  \u001B[31m󱎘  \u001B[32m󱎘  \u001B[33m󱎘  \u001B[34m󱎘  \u001B[35m󱎘  \u001B[36m󱎘\u001B[0m │
+    └ \u001B[36m \u001B[1;36m system\u001B[0m voidlinux ┘
+    ┌ \u001B[33m \u001B[1;36m window \u001B[0m    $XDG_CURRENT_DESKTOP ┐
+    │ \u001B[90m\u001B[0m  """
+list_prefix = "    │ \u001B[34m󱓞  "
+selection_prefix = "    └ \u001B[31m󱓞  "
+default_module_message = "    └ \u001B[34m󱓞  \u001B[33msearch\u001B[0m the internet"
+
+place_holder = "type & search"
+suggestion_mode = "list"
+suggestion_lines = 4
+prefix_color = "\u001B[33m"
+description_color = "\u001B[39m"
+place_holder_color = "\u001B[90m"
+hint_color = "\u001B[90m"
+
+[[modules]]
+description = "desktop programs"
+prefix = "app"
+cmd = """
+desktop_file() {
+find /usr/share/applications -name "*.desktop" 2>/dev/null
+find /usr/local/share/applications -name "*.desktop" 2>/dev/null
+find "$HOME/.local/share/applications" -name "*.desktop" 2>/dev/null
+find /var/lib/flatpak/exports/share/applications -name "*.desktop" 2>/dev/null
+find "$HOME/.local/share/flatpak/exports/share/applications" -name "*.desktop" 2>/dev/null
+}
+selected="$(desktop_file | awk -F/ '{print $NF}' | sort -u | fzf --info-command 'echo -e " desktop apps ($FZF_POS/$FZF_TOTAL_COUNT)"' --cycle --gutter " " --pointer " ▌" --color "bg+:-1,pointer:1,info:8,separator:8,scrollbar:0" --prompt '  ' -m )"
+[ -z "$selected" ] && exit
+app_path=""
+for d in /usr/share/applications /usr/local/share/applications "$HOME/.local/share/applications" /var/lib/flatpak/exports/share/applications "$HOME/.local/share/flatpak/exports/share/applications"; do
+  [ -f "$d/$selected" ] && app_path="$d/$selected" && break
+done
+exec_cmd=$(grep '^Exec=' "$app_path" 2>/dev/null | head -1 | sed 's/^Exec=//;s/%[fFuUdDn]//g')
+setsid -f sh -c "$exec_cmd"
+"""
+
+[[modules]]
+description = "subreddits"
+prefix = "reddit"
+cmd = "xdg-open https://www.reddit.com/r/'{}'"
+with_argument = true
+url_encode = true
+unbind_proc = true
+
+[[modules]]
+description = "search youtube"
+prefix = "yt"
+cmd = "setsid -f xdg-open 'https://www.youtube.com/results?search_query={}'"
+with_argument = true
+url_encode = true
+unbind_proc = true
+
+[[modules]]
+description = "run commands"
+prefix = "sh"
+cmd = """
+$(printf $TERM | sed 's/xterm-//g') -e sh -c "{}"
+"""
+with_argument = true
+unbind_proc = true
+
+[[modules]]
+description = "power menu (fzf)"
+prefix = "po"
+cmd = """
+power() {
+case "$1" in
+logout) loginctl terminate-session "$XDG_SESSION_ID" ;;
+suspend) loginctl suspend ;;
+hibernate) loginctl hibernate ;;
+reboot) loginctl reboot ;;
+shutdown) loginctl poweroff ;;
+esac
+}
+selected="$(echo '⏻  shutdown
+↻  reboot
+󰍃  logout
+⏾  suspend
+⏾  hibernate' | fzf --reverse --border --padding 1,2 --info-command 'printf " power menu ($FZF_POS/$FZF_TOTAL_COUNT)"' --cycle --gutter ' ' --pointer ' ▌' --color 'bg+:-1,pointer:1,info:8,separator:8,scrollbar:0' --prompt '  ' | awk '{print $NF}')"
+[ -z "$selected" ] && exit
+power "$selected"
+"""

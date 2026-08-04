@@ -5,7 +5,7 @@ cacheDir="$HOME/.cache/wallcache"
 scriptsDir="$HOME/.config/mango/scripts/"
 iDIR="$HOME/.config/swaync/images"
 
-S -d "$cacheDir" ] || mkdir -p "$cacheDir"
+[ -d "$cacheDir" ] || mkdir -p "$cacheDir"
 
 # -------------------------------------------------
 # Detectar monitor enfocado

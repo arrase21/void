@@ -53,7 +53,7 @@ max-visible=10
 ignore-timeout=1
 
 background-color=${surface}ee
-text-color=${on_surface}
+text-color=${primary}
 border-color=${primary}
 progress-color=${primary}
 
