@@ -26,11 +26,6 @@ get_icon() {
 	fi
 }
 
-# Notify
-notify_user() {
-	notify-send -e -h string:x-canonical-private-synchronous:brightness_notif -h int:value:$current -u low -i $icon "Screen" "Brightness:$current%"
-}
-
 # Change brightness
 change_backlight() {
 	local current_brightness

@@ -3,7 +3,6 @@ if status is-interactive
     # Paths
     fish_add_path $HOME/.cargo/bin
     fish_add_path $HOME/.local/bin
-    fish_add_path $HOME/.spicetify
     fish_add_path $HOME/go/bin
     fish_add_path $HOME/.local/share/pnpm
 
@@ -16,17 +15,12 @@ if status is-interactive
     alias clear "printf '\033[2J\033[3J\033[1;1H'"
 
     # Aliases de aplicaciones
-    alias q 'qs -c ii'
     alias v 'nvim'
     alias t 'tmux'
     alias g 'git'
     alias y 'yazi'
 
-    # Aliases de Python
-    alias pv 'python -m venv .env'
-    alias pva 'source .env/bin/activate.fish'
     alias pga 'source pgadmin4/bin/activate.fish'
-    alias mango="dbus-run-session ~/.local/bin/start-wayland"
 end
 
 # FZF

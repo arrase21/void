@@ -1,18 +1,26 @@
 /* @import url('./wallust/colors-waybar.css'); */
 @import url('./matugen/matugen-waybar.css');
 
+/* Variables de color con fallback */
+/* @define-color bordercolor @color11; */
+/* @define-color textcolor1 @color3; */
+/* @define-color textcolor2 @color7; */
+/* @define-color textcolor4 @color5; */
+/* @define-color foreground #585858; */
+/* @define-color background #282828; */
+
 @define-color bordercolor @on_secondary;
-@define-color textcolor1 #a9b665;
+@define-color textcolor1 @inverse_primary;
+@define-color textcolor3 @primary_fixed_dim;
 @define-color textcolor2 @on_primary_container;
-@define-color textcolor3 #ea6962;
 @define-color textcolor4 @inverse_primary;
-@define-color textcolor5 #d4be98;
-@define-color textcolor6 #d8a657;
+@define-color textcolor5 @tertiary;
+@define-color textcolor6 @on_tertiary_container;
 @define-color foreground #585858;
 @define-color background @surface_dim;
 
 * {
-  background-color:#1d2021;
+  background-color:@background;
   border: none;
   border-radius: 0;
   min-height: 0;
@@ -130,9 +138,13 @@ tooltip {
   color: @foreground;
 }
 
+
 #clock {
-    color: @textcolor1;
+    /* background-color:#a3be8c; */
+    color: @textcolor3;
     padding: 0rem 1rem;
+    /* border-radius: 10px; */
+    /* margin: 8px 10px; */
 }
 
 #custom-screenrecording-indicator {
