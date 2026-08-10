@@ -39,13 +39,14 @@ change_backlight() {
 	fi
 
 	# Ensure new brightness is within valid range
-	if (( new_brightness < 5 )); then
-		new_brightness=5
+	if (( new_brightness < 1 )); then
+		new_brightness=1
 	elif (( new_brightness > 100 )); then
 		new_brightness=100
 	fi
 
 	brightnessctl set "${new_brightness}%"
+	echo "$new_brightness" > /tmp/quickshell-brightness
 	get_icon
 	current=$new_brightness
 	notify_user
