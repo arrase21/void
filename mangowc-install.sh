@@ -55,12 +55,9 @@ meson ninja gcc make
 
 add_repositories() {
     title "Adding repositories"
-
     echo "repository=https://repo.voiders.dev" |
         sudo tee /etc/xbps.d/10-voiders-community.conf > /dev/null
-
     sudo xbps-install -S
-
     ok "Repositories added"
 }
 
@@ -263,6 +260,56 @@ disable_service() {
 }
 
 ### ---------------------------------
+# USER D-BUS (turnstile)
+### ---------------------------------
+
+install_user_dbus() {
+    title "User D-Bus (turnstile)"
+
+    local BASE="$HOME/repos/void"
+    local SHARE=/usr/share/examples/turnstile
+    local DEST="$HOME/.config/service"
+
+    mkdir -p "$DEST/dbus" "$DEST/turnstile-ready"
+
+    if [ -f "$SHARE/dbus.run" ] && [ -f "$SHARE/dbus.check" ]; then
+        step "Installing dbus.run / dbus.check"
+
+        cp "$SHARE/dbus.run" "$DEST/dbus/run"
+        cp "$SHARE/dbus.check" "$DEST/dbus/check"
+        chmod +x "$DEST/dbus/run" "$DEST/dbus/check"
+    else
+        warn "turnstile examples not found in $SHARE"
+    fi
+
+    cat > "$DEST/turnstile-ready/conf" << 'EOF'
+core_services="dbus"
+EOF
+
+    if [ -d "$BASE" ]; then
+        step "Mirroring to dotfiles repo"
+
+        mkdir -p \
+            "$BASE/.config/service/dbus" \
+            "$BASE/.config/service/turnstile-ready"
+
+        cp -a \
+            "$DEST/dbus/." \
+            "$BASE/.config/service/dbus/"
+
+        cp \
+            "$DEST/turnstile-ready/conf" \
+            "$BASE/.config/service/turnstile-ready/conf"
+
+        ok "User D-Bus saved in $BASE/.config/service"
+    else
+        warn "Dotfiles repo not found, skipping mirror"
+    fi
+
+    ok "User D-Bus configured"
+}
+
+### ---------------------------------
 # SETUP
 ### ---------------------------------
 
@@ -285,7 +332,9 @@ setup() {
     ### -----------------------------
     # CORE SERVICES
     ### -----------------------------
-
+    step "Adding &USER to group"
+    sudo usermod -aG _seatd,wheel,video,input,kvm "$USER"
+    ok "Groups added (requires logout or reboot)"
     step "Enabling core services"
 
     enable_service dbus
@@ -339,25 +388,18 @@ EOF
     ### -----------------------------
     # BLUETOOTH
     ### -----------------------------
-
     step "Configuring Bluetooth"
-
     enable_service bluetoothd
-
     ### -----------------------------
     # CHRONY
     ### -----------------------------
-
     step "Configuring chrony"
-
     enable_service chronyd
 
     ### -----------------------------
     # VERIFY
     ### -----------------------------
-
     sleep 2
-
     title "Checking services"
 
     local services=(
@@ -373,14 +415,12 @@ EOF
     local failed=0
 
     for service in "${services[@]}"; do
-
         if sv status "$service" >/dev/null 2>&1; then
             echo "  ✔ $service"
         else
             echo "  ❌ $service"
             failed=1
         fi
-
     done
 
     if [ "$failed" -ne 0 ]; then
@@ -389,7 +429,6 @@ EOF
     else
         ok "All services are running"
     fi
-
     ok "System configuration completed"
 }
 
@@ -400,19 +439,13 @@ EOF
 main() {
 
     clear
-
     title "Mangowc Installer"
-
     add_repositories
-
     install_dependencies
-
     clone_dotfiles
-
     copy_configs
-
+    install_user_dbus
     install_fonts
-
     setup
 
     title "INSTALL COMPLETE"
