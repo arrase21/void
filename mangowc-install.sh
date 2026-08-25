@@ -27,7 +27,7 @@ warn() {
 core_pkgs="
 bc curl wget unzip 7zip git jq inxi xdg-user-dirs
 playerctl wiremix libspa-bluetooth pamixer bluetui
-bluez dbus turnstile seatd zzzy
+bluez dbus turnstile seatd zzzy xdg-portal-wlr
 linux-firmware-intel mesa-dri rsync
 intel-video-accel zramen pipewire wireplumber
 iwd udevil chrony
