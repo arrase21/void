@@ -1,14 +1,6 @@
 /* @import url('./wallust/colors-waybar.css'); */
 @import url('./matugen/matugen-waybar.css');
 
-/* Variables de color con fallback */
-/* @define-color bordercolor @color11; */
-/* @define-color textcolor1 @color3; */
-/* @define-color textcolor2 @color7; */
-/* @define-color textcolor4 @color5; */
-/* @define-color foreground #585858; */
-/* @define-color background #282828; */
-
 @define-color bordercolor @on_secondary;
 @define-color textcolor1 @inverse_primary;
 @define-color textcolor3 @primary_fixed_dim;
